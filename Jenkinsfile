@@ -32,14 +32,14 @@ pipeline {
         stage('Build & Tag Docker Image') {
             steps {
                 echo 'Building Docker Image with Tags...'
-                sh "docker build -t satyam88/booking-ms:latest -t booking-ms:latest ."
+                sh "docker build -t avalon26/booking-ms:latest -t booking-ms:latest ."
                 echo 'Docker Image Build Completed!'
             }
         }
         stage('Docker Image Scanning') {
             steps {
                 echo 'Scanning Docker Image with Trivy...'
-                sh 'trivy image satyam88/booking-ms:latest || echo "Scan Failed - Proceeding with Caution"'
+                sh 'trivy image avalon26/booking-ms:latest || echo "Scan Failed - Proceeding with Caution"'
                 echo 'Docker Image Scanning Completed!'
             }
         }
@@ -47,9 +47,9 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'dockerhubCred', variable: 'dockerhubCred')]) {
-                        sh 'docker login docker.io -u satyam88 -p ${dockerhubCred}'
+                        sh 'docker login docker.io -u avalon26 -p Esds@abhi2025'
                         echo 'Pushing Docker Image to Docker Hub...'
-                        sh 'docker push satyam88/booking-ms:latest'
+                        sh 'docker push avalon26/booking-ms:latest'
                         echo 'Docker Image Pushed to Docker Hub Successfully!'
                     }
                 }
