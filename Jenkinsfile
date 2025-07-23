@@ -44,17 +44,18 @@ pipeline {
             }
         }
         stage('Push Docker Image to Docker Hub') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'dockerhubCred', variable: 'dockerhubCred')]) {
-                        sh 'docker login docker.io -u avalon26 -p Esds@abhi2025'
-                        echo 'Pushing Docker Image to Docker Hub...'
-                        sh 'docker push avalon26/booking-ms:latest'
-                        echo 'Docker Image Pushed to Docker Hub Successfully!'
-                    }
-                }
-            }
-        }
+			steps {
+				withCredentials([usernamePassword(credentialsId: 'dockerhubCred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+            sh """
+                echo 'Logging in to Docker Hub...'
+                echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                echo 'Pushing Docker Image to Docker Hub...'
+                docker push avalon26/booking-ms:latest
+                echo 'Docker Image Pushed to Docker Hub Successfully!'
+            """
+				}
+			}
+		}
         stage('Push Docker Image to Amazon ECR') {
             steps {
                 script {
