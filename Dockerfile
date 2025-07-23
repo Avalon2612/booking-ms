@@ -8,10 +8,10 @@ RUN yum update -y && \
 
 # Set up Maven
 RUN cd /opt && \
-    wget https://dlcdn.apache.org/maven/maven-3/3.8.11/binaries/apache-maven-3.8.11-bin.tar.gz && \
-    tar xvf apache-maven-3.8.11-bin.tar.gz  && \
-    rm apache-maven-3.8.11-bin.tar.gz && \
-    echo "export M2_HOME=/opt/apache-maven-3.8.11" >> /root/.bashrc && \
+    wget https://dlcdn.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz && \
+    tar xvf apache-maven-3.9.11-bin.tar.gz  && \
+    rm apache-maven-3.9.11-bin.tar.gz && \
+    echo "export M2_HOME=/opt/apache-maven-3.9.11" >> /root/.bashrc && \
     echo "export M2=\$M2_HOME/bin" >> /root/.bashrc && \
     echo "export PATH=\$M2:\$PATH" >> /root/.bashrc
 
@@ -29,6 +29,6 @@ RUN cd /usr/local/bin && \
 
 
 # Set environment variables for the current shell session
-ENV M2_HOME=/opt/apache-maven-3.8.9
+ENV M2_HOME=/opt/apache-maven-3.9.11
 ENV M2=$M2_HOME/bin
 ENV PATH=$M2:/usr/local/bin:$PATH
