@@ -74,19 +74,19 @@ pipeline {
 		 stage("Upload Docker Image to Nexus") {
                     steps {
                         script {
-                            withCredentials([usernamePassword(credentialsId: 'nexuscred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            withCredentials ([username Password (credentialsId: 'nexuscred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                                 sh """
-                                    echo 'Logging in to Nexus Docker Registry...'
-                                    echo \$PASSWORD | docker login http://13.233.204.228:8085 -u \$USERNAME --password-stdin
-                                    echo 'Push Docker Image to Nexus In Progress'
-                                    docker tag booking-ms:latest 13.233.204.228:8085/booking-ms:latest
-                                    docker push 13.233.204.228:8085/booking-ms:latest
-                                    echo 'Push Docker Image to Nexus: Completed'
+                                   docker login http://13.233.204.228:8085/repository/booking-ms/ -u admin -p ${PASSWORD}'
+                                   echo "Push Docker Image to Nexus In Progress"
+                                   sh 'docker tag booking-ms 13.233.204.228:8085/booking-ms: latest'
+                                   sh 'docker push 13.233.204.228:8085/booking-ms
+                                   echo "Push Docker Image to Nexus: Completed"
                                 """
                             }
                         }
                     }
-                }
+        }
+
         stage('Cleanup Docker Images') {
             steps {
                 echo 'Cleaning up local Docker images...'
