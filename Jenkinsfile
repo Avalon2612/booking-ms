@@ -72,7 +72,7 @@ pipeline {
             }
 		}
 		stage("Upload Docker Image to Nexus") {
-        	steps (
+        	steps {
         		script {
         			withCredentials ([username Password (credentialsId: 'nexuscred, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
         			sh 'docker login http://13.233.204.228:8085/repository/booking-ms/ -u admin -p ${PASSWORD}'
