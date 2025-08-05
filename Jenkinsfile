@@ -71,22 +71,22 @@ pipeline {
                 }
             }
 		}
-		 stage("Upload Docker Image to Nexus") {
+		 stage('Upload Docker Image to Nexus') {
                      steps {
                          script {
                              withCredentials([usernamePassword(credentialsId: 'nexuscred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                                 sh """
+                                 sh '''
                                      echo 'Logging in to Nexus Docker Registry...'
-                                     echo \$PASSWORD | docker login http://13.235.17.8:8085 -u \$USERNAME --password-stdin
+                                     echo $PASSWORD | docker login http://13.235.17.8:8085 -u $USERNAME --password-stdin
                                      echo 'Push Docker Image to Nexus In Progress'
                                      docker tag booking-ms:latest 13.235.17.8:8085/booking-ms:latest
                                      docker push 13.235.17.8:8085/booking-ms:latest
                                      echo 'Push Docker Image to Nexus: Completed'
-                                 """
+                                 '''
                              }
                          }
                      }
-         }
+                 }
 
         stage('Cleanup Docker Images') {
             steps {
