@@ -1,27 +1,40 @@
 pipeline {
     agent any
-    parameters {
-        string(name: 'maven_version', defaultValue: '3.9.3', description: 'Pass the version of Maven')
-        string(name: 'terraform_version', defaultValue: '1.8.5', description: 'Pass the version of Terraform')
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
+    }
+    tools {
+        maven 'maven_3.9.10'
     }
     stages {
-        stage('Download Maven') {
+        stage('Code Compilation') {
             steps {
-                sh '''
-                cd /var/lib/jenkins/
-                sudo wget https://dlcdn.apache.org/maven/maven-3/${maven_version}/binaries/apache-maven-${maven_version}-bin.tar.gz
-                '''
+                echo 'Starting Code Compilation...'
+                sh 'mvn clean compile'
+                echo 'Code Compilation Completed Successfully!'
             }
         }
-        stage('Download Terraform') {
+        stage('Code QA Execution') {
             steps {
-                sh '''
-                cd /opt
-                sudo wget https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip
-                '''
+                echo 'Running JUnit Test Cases...'
+                sh 'mvn clean test'
+                echo 'JUnit Test Cases Completed Successfully!'
+            }
+        }
+        stage('Code Package') {
+            steps {
+                echo 'Creating WAR Artifact...'
+                sh 'mvn clean package'
+                echo 'WAR Artifact Created Successfully!'
+            }
+        }
+        stage('Print Java Version ') {
+            steps {
+                echo 'Creating WAR Artifact...'
+                sh 'java --version'
+                echo 'WAR Artifact Created Successfully!'
             }
         }
     }
-
 }
-
