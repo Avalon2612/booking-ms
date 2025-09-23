@@ -9,18 +9,21 @@ pipeline {
             steps {
                 sh '''
                 cd /var/lib/jenkins/
-                sudo wget https://dlcdn.apache.org/maven/maven-3/${maven_version}/binaries/apache-maven-${maven_version}-bin.tar.gz
+                sudo wget https://dlcdn.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz
                 '''
             }
         }
-        stage('Download Terraform') {
+        stage('Test') {
             steps {
-                sh '''
-                cd /opt
-                sudo wget https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip
-                '''
+                echo "Running unit tests..."
             }
-    }   }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Deploying application..."
+            }
+        }
+    }
 }
 
 
