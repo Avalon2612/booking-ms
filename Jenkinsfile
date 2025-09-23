@@ -9,7 +9,7 @@ pipeline{
             echo "Running unit test"
             }
         }
-        stage ('Deploy'){.
+        stage ('Deploy'){
             echo "Deploying application"
             }
         }
