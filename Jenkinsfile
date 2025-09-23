@@ -2,15 +2,18 @@ pipeline{
     agent any
     stages{
         stage ('Build'){
-            echo "compiling source code"
-             }
+            steps{
+                echo "compiling source code"
+            }
         }
         stage ('Test'){
-            echo "Running unit test"
+            steps{
+                echo "Running unit test"
             }
         }
         stage ('Deploy'){
-            echo "Deploying application"
+            steps{
+                echo "Deploying application"
             }
         }
     }
